@@ -6,8 +6,10 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "apscheduler>=3.11.0",
+    "hydrogram>=0.2.0",
     "loguru>=0.7.3",
     "pydantic-settings>=2.10.1",
     "pyodbc>=5.2.0",
     "sqlalchemy>=2.0.43",
+    "tgcrypto>=1.2.5",
 ]
