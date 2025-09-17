@@ -61,3 +61,4 @@ user_info.json
 *.prompt.md
 *.chatmode.
 *.session*
+users.json
