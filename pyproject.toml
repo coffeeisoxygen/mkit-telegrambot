@@ -5,12 +5,16 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "aiohttp>=3.12.15",
     "apscheduler>=3.11.0",
+    "cryptg>=0.5.1",
     "hydrogram>=0.2.0",
     "loguru>=0.7.3",
+    "pillow>=11.3.0",
     "pydantic-settings>=2.10.1",
     "pyodbc>=5.2.0",
     "sqlalchemy>=2.0.43",
+    "telethon>=1.41.2",
     "tgcrypto>=1.2.5",
     "tinydb>=4.8.2",
 ]

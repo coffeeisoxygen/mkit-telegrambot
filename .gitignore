@@ -62,3 +62,4 @@ user_info.json
 *.chatmode.
 *.session*
 users.json
+sessions/

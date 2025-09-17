@@ -4,12 +4,13 @@ from pathlib import Path
 from loguru import logger
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from config.cfg_values import (
+from src.config.cfg_values import (
     ConfigEnvironment,
     DatabaseConfig,
     SchedulerConfig,
     SQLiteConfig,
     SQLServerConfig,
+    TelegramConfig,
 )
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -29,6 +30,7 @@ class Settings(BaseSettings):
     APPDB: SQLiteConfig = SQLiteConfig()
     OTODB: SQLServerConfig  # ini wajib overide , no default values.
     SCHEDULER: SchedulerConfig = SchedulerConfig()
+    TELE: TelegramConfig  # wajib overide no default values
 
 
 @lru_cache
