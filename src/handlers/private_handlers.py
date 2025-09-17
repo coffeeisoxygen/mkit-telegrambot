@@ -15,10 +15,15 @@ class PrivateHandlers:
         async def handle_private(client, message):
             uid = message.from_user.id
             name = message.from_user.first_name
-            logger.info(f"[PRIVATE] {uid} | {message.text}")
+            username = getattr(message.from_user, "username", None)
+            content = message.text or "<non-text message>"
+            log = logger.bind(user_id=uid, username=username or name)
+            log.info(f"[PRIVATE] {name}-({uid}) | {content}")
 
             if not self.storage.is_user_approved(uid):
-                self.storage.add_pending_user(uid, name)
+                # Cek apakah user sudah pending, jika belum baru tambahkan
+                if not self.storage.is_user_pending(uid):
+                    self.storage.add_pending_user(uid, name)
                 await message.reply_text(
                     "⏳ Kamu belum terverifikasi. Tunggu admin approve ya."
                 )
@@ -35,9 +40,9 @@ class PrivateHandlers:
                     ])
                     await client.send_message(
                         self.admin_id,
-                        f"👤 User baru minta akses:\nID: {uid}\nNama: {name}\nPesan: {message.text}",
+                        f"👤 User baru minta akses:\nID: {uid}\nNama: {name}\nPesan: {content}",
                         reply_markup=kb,
                     )
                 return
 
-            await message.reply_text(f"Halo {name}, kamu mengirim: {message.text}")
+            await message.reply_text(f"Halo {name}, kamu mengirim: {content}")
