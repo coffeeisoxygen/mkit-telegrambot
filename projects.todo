@@ -1,0 +1,25 @@
+Todo:
+  ☐ 🗂️ Refactor Staging
+    ☐  Storage Layer
+      ☐  Wrapper TinyDB (CRUD)
+        ☐  Jangan langsung raw dict → gunakan Pydantic object untuk masuk/keluar data.
+        ☐  Storage bertindak sebagai repository.
+
+      ☐  Schemas Layer
+        ☐  Definisikan semua data: User, PendingUser, dsb.
+        ☐  Extendable: role, rate-limit config, dsb.
+
+      ☐  Admin Handlers
+        ☐ Fokus pada approval, reject, dan list pending user.
+        ☐  Handler memanggil storage dan menggunakan schemas.
+
+      ☐  User Handlers
+        ☐  Private: verifikasi, rate limit.
+        ☐  Group: reply jika di-mention.
+        ☐  Channel: hanya log.
+
+  🔑 Benefit urutan ini:
+     - Mulai dari Storage agar fondasi data jelas (tidak ada dict liar).
+     - Schemas memastikan data konsisten dan validasi dengan Pydantic.
+     - Admin handler mudah dites (approve → storage → cek DB).
+     - User handler terakhir karena bergantung pada 3 layer di atas.
