@@ -9,7 +9,6 @@ from src.config.cfg_values import (
     DatabaseConfig,
     SchedulerConfig,
     SQLiteConfig,
-    SQLServerConfig,
     TelegramConfig,
 )
 
@@ -26,9 +25,10 @@ class Settings(BaseSettings):
         case_sensitive=False,
     )
     ENV: ConfigEnvironment = ConfigEnvironment()
+
     SETDB: DatabaseConfig = DatabaseConfig()
     APPDB: SQLiteConfig = SQLiteConfig()
-    OTODB: SQLServerConfig  # ini wajib overide , no default values.
+    # OTODB: SQLServerConfig  # ini wajib overide , no default values.
     SCHEDULER: SchedulerConfig = SchedulerConfig()
     TELE: TelegramConfig  # wajib overide no default values
 

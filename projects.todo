@@ -23,3 +23,35 @@ Todo:
      - Schemas memastikan data konsisten dan validasi dengan Pydantic.
      - Admin handler mudah dites (approve → storage → cek DB).
      - User handler terakhir karena bergantung pada 3 layer di atas.
+
+
+      1. Auth User
+      Validasi user (apakah sudah terdaftar/approved).
+      Blacklist user (jika ada abuse).
+      Status user (pending, approved, rejected).
+      2. Auth Channel/Group
+      Validasi channel/group yang boleh diakses bot.
+      Whitelist/blacklist channel/group.
+      Role/permission (misal: hanya admin bisa trigger command tertentu).
+      3. Rate Limiter
+      Batasi frekuensi request per user/channel untuk mencegah spam/abuse.
+      Bisa pakai decorator atau middleware di handler.
+      4. Global State/Config
+      Konfigurasi bot (token, API, admin list, dsb).
+      Database/storage instance (singleton).
+      Logging dan error handler global.
+      5. Event Filter/Middleware
+      Pre-processing event sebelum masuk ke handler (misal: cek auth, rate limit, dsb).
+      Bisa dibuat sebagai fungsi global atau base class handler.
+      6. Exception Handling
+      Tangani error secara global agar bot tidak crash.
+      Logging error dan notifikasi ke admin jika perlu.
+      7. Session Management
+      Pastikan session file/DB aman dan tidak corrupt.
+      8. Metrics/Monitoring (opsional)
+      Logging aktivitas bot untuk audit dan analisis.
+      Rekomendasi:
+
+      Buat modul/fungsi global untuk auth, rate limit, dan event filter.
+      Handler cukup fokus pada logic spesifik (habit/strategy), sedangkan validasi dan proteksi dilakukan di level global.
+      Jika ingin, saya bisa buatkan contoh global middleware untuk auth dan rate limiter di Telethon!
