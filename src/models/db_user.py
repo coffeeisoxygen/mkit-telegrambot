@@ -3,7 +3,7 @@
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from models import Base
+from src.models import Base
 from src.models.mixins import TimestampMixin
 from src.schemas import UserApprovalStatus
 
@@ -25,6 +25,6 @@ class User(Base, TimestampMixin):
     )  # Jumlah maksimum permintaan per menit agar tidak abuse
 
     is_superuser: Mapped[int] = mapped_column(Integer, default=0)  # 0 = False, 1 = True
-    verified_status: Mapped[int] = mapped_column(
+    status: Mapped[int] = mapped_column(
         Integer, default=UserApprovalStatus.PENDING
     )  # 0 = pending, 1 = approved, 2 = rejected, 3 = blocked, 4 = banned, 5 = deleted

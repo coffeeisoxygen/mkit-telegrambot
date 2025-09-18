@@ -13,3 +13,4 @@ class TimestampMixin:
     updated_at: Mapped[DateTime] = mapped_column(
         DateTime, default=func.now(), onupdate=func.now(), nullable=False
     )
+    deleted_at: Mapped[DateTime] = mapped_column(DateTime, nullable=True)

@@ -35,7 +35,7 @@ class DatabaseConfig(BaseModel):
 
 
 class SQLiteConfig(DatabaseConfig):
-    url: str = "sqlite+aiosqlite:///./application.db"
+    url: str = "sqlite+aiosqlite:///./mkittelebot.db"
     timeout: int = 30  # lock wait timeout
 
 
