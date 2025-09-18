@@ -1,3 +1,5 @@
+import asyncio
+
 from loguru import logger
 from telethon import TelegramClient, events
 
@@ -90,9 +92,9 @@ async def main():
     try:
         logger.info("Running clients until disconnected...")
         await client_bot.run_until_disconnected()  # type: ignore
-        # await client_user.run_until_disconnected() # type: ignore
+    except (asyncio.CancelledError, KeyboardInterrupt):
+        logger.info("Shutdown requested (Ctrl+C or Cancelled).")
     finally:
-        # --- Lifespan Shutdown ---
         logger.info("Closing resources...")
         await sqlite_session_manager.close()
         logger.info("Resources closed. Exiting.")
