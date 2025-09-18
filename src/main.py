@@ -33,7 +33,18 @@ storage = UserStorage("users.json")
 
 
 @client_bot.on(event=events.NewMessage(incoming=True, outgoing=False))
-async def echo_handler(event):
+async def echo_handler(event: events.NewMessage.Event) -> None:
+    """Handle incoming messages and echo them back if the user is verified.
+
+    This function is triggered for every new message event. It checks if the user
+    is verified and echoes the message back to the user if they are.
+
+    Args:
+        event (events.NewMessage.Event): The incoming message event.
+
+    Returns:
+        None
+    """
     sender = await event.get_sender()
     if not sender:
         return
@@ -66,7 +77,7 @@ async def seed_admin():
         await create_user_entry(
             db_session=db_session,
             user_id=admin_id,
-            name="Admin",
+            name=admin_name,
             rate_limit=100,
             is_superuser=1,
             status=UserApprovalStatus.APPROVED,
@@ -86,7 +97,7 @@ async def main():
 
     # If you also need the user client to run, uncomment the following lines
     # logger.info("Starting user client...")
-    # await client_user.start() # type: ignore
+    # await client_user.start()
     # logger.info("User client started.")
 
     try:
