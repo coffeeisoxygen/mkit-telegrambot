@@ -1,5 +1,6 @@
 """SQLAlchemy async session for SQLite using aiosqlite."""
 
+import contextlib
 from collections.abc import AsyncGenerator
 
 from loguru import logger
@@ -33,6 +34,7 @@ sqlite_session_manager = SQLiteAsyncSessionManager(settings.APPDB.url)
 
 
 # getter session
+@contextlib.asynccontextmanager
 async def get_sqlite_session() -> AsyncGenerator[AsyncSession, None]:
     """Provides an async session for SQLite."""
     async with sqlite_session_manager.session() as session:
