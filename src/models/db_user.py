@@ -21,7 +21,7 @@ class User(Base, TimestampMixin):
         String, nullable=False
     )  # not unique, bisa aja nama user nya sama yg di stored dsini bisa username / name
     rate_limit: Mapped[int] = mapped_column(
-        Integer, default=0
+        Integer, default=5
     )  # Jumlah maksimum permintaan per menit agar tidak abuse
 
     is_superuser: Mapped[int] = mapped_column(Integer, default=0)  # 0 = False, 1 = True
