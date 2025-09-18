@@ -74,3 +74,4 @@ class TelegramConfig(BaseModel):
     BOT_TOKEN: str
     ADMIN_ID: int
     ADMIN_PHONE: str
+    ADMIN_NAME: str

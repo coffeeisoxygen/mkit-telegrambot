@@ -1,18 +1,20 @@
 from loguru import logger
 from telethon import TelegramClient, events
 
-from schemas import UserApprovalStatus
 from src.config import get_settings
 from src.database.sqlite_session import get_sqlite_session, sqlite_session_manager
+from src.schemas import UserApprovalStatus
 from src.storage import UserStorage
-from users.user_crud import create_user_entry, get_user_by_telegram_id
+from src.users.user_crud import create_user_entry, get_user_by_telegram_id
 
 app_settings = get_settings()
 api_id = app_settings.TELE.API_ID
 api_hash = app_settings.TELE.API_HASH
 bot_token = app_settings.TELE.BOT_TOKEN
 admin_id = app_settings.TELE.ADMIN_ID
+admin_name = app_settings.TELE.ADMIN_NAME
 
+#
 # Singleton
 client_bot = TelegramClient("bot_session", api_id=api_id, api_hash=api_hash)
 client_user = TelegramClient("user_session", api_id=api_id, api_hash=api_hash)
@@ -46,6 +48,9 @@ async def echo_handler(event):
             logger.info(f"User '{user.name}' found in database.")
         else:
             logger.info(f"User with ID {sender_id} not found in database.")
+            if event.is_private:
+                await event.reply("anda belum terverifikasi")
+            return  # Don't echo if not verified
 
     # Reply only to private chat
     if event.is_private:
