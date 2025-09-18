@@ -39,5 +39,3 @@ logging.getLogger().handlers = [InterceptHandler()]  # Hapus propagateHandler
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-#

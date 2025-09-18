@@ -18,8 +18,8 @@ admin_name = app_settings.TELE.ADMIN_NAME
 
 #
 # Singleton
-client_bot = TelegramClient("bot_session", api_id=api_id, api_hash=api_hash)
-client_user = TelegramClient("user_session", api_id=api_id, api_hash=api_hash)
+client_bot = TelegramClient("sessions/bot", api_id=api_id, api_hash=api_hash)
+client_user = TelegramClient("sessions/user", api_id=api_id, api_hash=api_hash)
 # Singleton storage object
 storage = UserStorage("users.json")
 
@@ -32,7 +32,7 @@ storage = UserStorage("users.json")
 # CallbackHandlers(app_bot, storage, admin_id)
 
 
-@client_bot.on(event=events.NewMessage(incoming=True, outgoing=False))
+@client_bot.on(events.NewMessage(incoming=True, outgoing=False))
 async def echo_handler(event: events.NewMessage.Event) -> None:
     """Handle incoming messages and echo them back if the user is verified.
 
@@ -107,5 +107,15 @@ async def main():
         logger.info("Shutdown requested (Ctrl+C or Cancelled).")
     finally:
         logger.info("Closing resources...")
+        if client_bot is not None:
+            result = client_bot.disconnect()
+            if asyncio.iscoroutine(result):
+                await result
+        logger.info("Bot client disconnected.")
+        if client_user is not None:
+            result = client_user.disconnect()
+            if asyncio.iscoroutine(result):
+                await result
+        logger.info("User client disconnected.")
         await sqlite_session_manager.close()
-        logger.info("Resources closed. Exiting.")
+        logger.info("database closed. Exiting.")
